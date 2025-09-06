@@ -21,7 +21,8 @@ jobs:
         working-directory: Env/${{ matrix.environment }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Show directory structure
         run: ls -R
@@ -37,6 +38,10 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate
+
+      # Prevent idle timeout during long terraform operations
+      - name: Keep runner alive
+        run: while true; do echo "still running..."; sleep 60; done &
 
       - name: Terraform Plan
         if: github.event_name == 'pull_request'
