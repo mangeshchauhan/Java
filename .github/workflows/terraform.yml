@@ -31,7 +31,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Init
-        run: terraform init -input=false
+        run: terraform init -input=true
 
       - name: Terraform Format
         run: terraform fmt -check
