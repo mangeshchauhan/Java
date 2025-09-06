@@ -12,12 +12,19 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [dev, stage, prod]   # runs for each environment
+
     defaults:
       run:
-        working-directory: envs/dev   # change per environment
+        working-directory: envs/${{ matrix.environment }}
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Show directory structure
+        run: ls -R
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
